@@ -1,4 +1,3 @@
-// import { lazy } from 'react'
 import loadable from '@loadable/component'
 import { HomeOutlined, TableOutlined, BorderlessTableOutlined, UserOutlined } from '@ant-design/icons'
 

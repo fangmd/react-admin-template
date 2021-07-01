@@ -24,7 +24,7 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
     <Layout.Content>
       <Switch location={location}>
         {tempMenuList.map((route) => {
-          // 动态路由
+          // TODO: 权限控制，动态路由
           //   return handleFilter(route) && <Route component={route.component} key={route.path} path={route.path} />
           return <Route exact component={route.component} key={route.path} path={route.path} />
         })}

@@ -1,26 +1,18 @@
 import { useStore } from '@/store/context'
-import { HomeOutlined } from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function LayoutSider(): JSX.Element {
   const store = useStore()
-  const history = useHistory()
-
-  const onMenuClick = (e: any) => {
-    console.log(e)
-    history.push(e.key)
-  }
-
-  const a = HomeOutlined
 
   /**
    * 创建菜单节点
    */
   const getMenuNodes = (_menuList: any[]) => {
     return _menuList.reduce((pre, item) => {
+      // TODO: 权限控制，动态路由
       if (item.children) {
         pre.push(
           <Menu.SubMenu
@@ -38,10 +30,10 @@ function LayoutSider(): JSX.Element {
       } else {
         pre.push(
           <Menu.Item key={item.path}>
-            <span>
+            <Link to={item.path}>
               {React.createElement(item.icon)}
               <span>{item.title}</span>
-            </span>
+            </Link>
           </Menu.Item>
         )
       }
@@ -51,7 +43,7 @@ function LayoutSider(): JSX.Element {
 
   return (
     <Layout.Sider>
-      <Menu onClick={onMenuClick} mode="inline" theme="dark">
+      <Menu mode="inline" theme="dark">
         {getMenuNodes(store.adminStore.menu)}
       </Menu>
     </Layout.Sider>

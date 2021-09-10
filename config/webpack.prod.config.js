@@ -46,6 +46,7 @@ const webpackProdConfig = {
           test: /\.(less|css)$/,
           chunks: 'all',
           minChunks: 1,
+          priority: -20,
           reuseExistingChunk: true,
           enforce: true,
         },

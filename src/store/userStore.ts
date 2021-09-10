@@ -2,7 +2,7 @@ import { observable } from "mobx"
 
 const store = observable({})
 
-export function createUserStore() {
+export function createUserStore():any{
   return {
     user: store,
     get userInfo() {

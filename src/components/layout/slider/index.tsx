@@ -19,7 +19,7 @@ function LayoutSider(): JSX.Element {
             key={item.path}
             title={
               <span>
-                {React.createElement(item.icon)}
+                {item.icon && React.createElement(item.icon)}
                 <span>{item.title}</span>
               </span>
             }
@@ -31,7 +31,7 @@ function LayoutSider(): JSX.Element {
         pre.push(
           <Menu.Item key={item.path}>
             <Link to={item.path}>
-              {React.createElement(item.icon)}
+              {item.icon && React.createElement(item.icon)}
               <span>{item.title}</span>
             </Link>
           </Menu.Item>

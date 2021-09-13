@@ -18,7 +18,7 @@ const webpackConfigDev = {
   devServer: {
     contentBase: path.join(__dirname, '../build'),
     compress: true,
-    port: 4001,
+    port: 4002,
     hot: true,
     historyApiFallback: true, // router history 模式下需要
     proxy: {

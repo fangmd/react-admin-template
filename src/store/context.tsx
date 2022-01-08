@@ -1,8 +1,8 @@
 import React from 'react'
 import { useLocalStore } from 'mobx-react-lite'
 import { createUserStore } from './userStore'
-import { createBookStore } from './bookStore'
-import adminStore from './adminStore'
+import { createAdminStore } from './adminStore'
+import { createTemplateStore } from './templateStore'
 
 const StoreContext = React.createContext(null)
 
@@ -15,14 +15,17 @@ export const useStore = (): any => {
   return store
 }
 
+export let adminStore
+
 export function Provider({ children }: any): JSX.Element {
-  const userStore: any = useLocalStore(createUserStore)
-  const bookStore: any = useLocalStore(createBookStore)
+  adminStore = useLocalStore(createAdminStore)
+  const userStore = useLocalStore(createUserStore)
+  const templateStore = useLocalStore(createTemplateStore)
 
   const store: any = {
     userStore,
-    bookStore,
     adminStore,
+    templateStore,
   }
 
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>

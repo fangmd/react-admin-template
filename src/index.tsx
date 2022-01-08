@@ -6,8 +6,7 @@ import 'antd/dist/antd.css'
 import './assets/css/base.css'
 import './assets/css/admin.less'
 import '@/assets/css/base-tmp.less'
-import { Provider } from '@/store/context'
-import adminStore from '@/store/adminStore'
+import { adminStore, Provider } from '@/store/context'
 import AdminLayout from '@/components/layout'
 
 const env = process.env.NODE_ENV

@@ -1,4 +1,3 @@
-import { common } from '@/api'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
@@ -11,8 +10,8 @@ const HomePage: React.FC = observer(() => {
   const store = useStore()
 
   const testGetRequest = async () => {
-    const res = await common.getUser()
-    setGetResult(JSON.stringify(res))
+    // const res = await common.getUser()
+    // setGetResult(JSON.stringify(res))
   }
 
   const changeUserName = () => {

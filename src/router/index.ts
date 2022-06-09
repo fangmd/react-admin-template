@@ -5,6 +5,8 @@ const HomePage = loadable(() => import(/* webpackChunkName: 'HomePage'*/ '@/page
 const MinePage = loadable(() => import(/* webpackChunkName: 'MinePage'*/ '@/pages/mine/mine'))
 const Table = loadable(() => import(/* webpackChunkName: 'Table'*/ '@/pages/table'))
 
+const UserManage = loadable(() => import(/* webpackChunkName: 'Table'*/ '@/pages/system/UserManage'))
+
 export default [
   {
     path: '/',
@@ -14,7 +16,7 @@ export default [
   },
   {
     path: '/table',
-    title: '表格',
+    title: '表格',
     icon: TableOutlined,
     children: [
       { path: '/table/table1', component: Table, title: '表格1', icon: BorderlessTableOutlined },
@@ -22,4 +24,15 @@ export default [
     ],
   },
   { path: '/admin-user', component: MinePage, title: '用户管理', icon: UserOutlined },
+  {
+    path: '/system',
+    component: MinePage,
+    title: '系统管理',
+    icon: UserOutlined,
+    children: [
+      { path: '/system/menu', component: Table, title: '菜单管理', icon: BorderlessTableOutlined },
+      { path: '/system/role', component: Table, title: '角色管理', icon: BorderlessTableOutlined },
+      { path: '/system/user', component: UserManage, title: '用户管理', icon: BorderlessTableOutlined },
+    ],
+  },
 ]

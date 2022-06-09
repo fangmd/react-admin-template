@@ -7,6 +7,7 @@
 - [x] 图标包：[@ant-design/icons](https://ant.design/components/icon-cn/)
 - [x] 表格 Demo 页面
 - [x] 使用 pnpm
+- [ ] 权限控制：按钮，菜单
 
 
 ## hooks

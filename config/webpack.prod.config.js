@@ -1,3 +1,7 @@
+/*
+ * @Description:
+ * @LastEditTime: 2022-02-08 16:22:31
+ */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -8,8 +12,14 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const { merge } = require('webpack-merge')
 const webpackConfigBase = require('./webpack.base.config')
 
+// const gitTag = require('child_process')
+//   .execSync('git describe --tags `git rev-list --tags --max-count=1`')
+//   .toString()
+//   .trim() // 获取提交版本号
+
 const webpackProdConfig = {
   mode: 'production',
+  devtool: 'hidden-source-map',
   entry: {
     app: ['@babel/polyfill', path.join(__dirname, '../src', 'index.tsx')],
   },
@@ -59,6 +69,9 @@ const webpackProdConfig = {
     publicPath: '/',
   },
   plugins: [
+    // new webpack.DefinePlugin({
+    //   GIT_TAG: gitTag,
+    // }),
     new CleanWebpackPlugin(),
     new CompressionWebpackPlugin({
       filename: '[path][base].gz',
@@ -69,12 +82,20 @@ const webpackProdConfig = {
       deleteOriginalAssets: false, //是否删除源文件,删除的话不会有js文件，都是gz文件
     }),
   ],
+  devServer: {
+    host: '0.0.0.0',
+    // contentBase: path.join(__dirname, '../build'),
+    // compress: true,
+    port: 5002,
+    hot: true,
+    historyApiFallback: true, // router history 模式下需要
+  },
 }
 
 const baseConfig = webpackConfigBase('production')
 
 const resultConfig = merge(baseConfig, webpackProdConfig)
 
-console.log(resultConfig)
+// console.log(resultConfig)
 
 module.exports = resultConfig

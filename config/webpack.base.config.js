@@ -4,14 +4,17 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const copyWebpackPlugin = require('copy-webpack-plugin')
-
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin')
 const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10000')
+const ConfigEnvWebpackPlugin = require('config-env-webpack-plugin')
 
 module.exports = function (webpackEnv) {
   // const isEnvDevelopment = process.env.NODE_ENV === 'development'
-  const isEnvProduction = process.env.NODE_ENV === 'production'
+  const isEnvProduction = process.env.NODE_ENV.includes('production')
+  // console.log('process.env.NODE_ENV', process.env.NODE_ENV)
 
   return {
+    mode: isEnvProduction ? 'production' : 'development',
     target: 'web',
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
@@ -116,6 +119,11 @@ module.exports = function (webpackEnv) {
                 },
                 {
                   loader: 'less-loader',
+                  options: {
+                    lessOptions: {
+                      javascriptEnabled: true,
+                    },
+                  },
                 },
               ],
             },
@@ -135,6 +143,7 @@ module.exports = function (webpackEnv) {
       ],
     },
     plugins: [
+      new ConfigEnvWebpackPlugin(),
       new webpack.ProvidePlugin({
         process: 'process/browser',
       }),
@@ -152,7 +161,7 @@ module.exports = function (webpackEnv) {
             from: path.join(__dirname, '../public'),
             to: './',
             filter: async (resourcePath) => {
-              console.log(resourcePath)
+              // console.log(resourcePath)
               const isIndexHtml = resourcePath.endsWith('/public/index.html')
               if (isIndexHtml) {
                 return false
@@ -162,6 +171,7 @@ module.exports = function (webpackEnv) {
           },
         ],
       }),
+      new AntdDayjsWebpackPlugin(),
     ],
   }
 }

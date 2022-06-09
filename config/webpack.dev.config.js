@@ -16,30 +16,34 @@ const webpackConfigDev = {
     publicPath: '/',
   },
   devServer: {
-    static: {
-      directory: path.resolve(__dirname, '../build'),
-      staticOptions: {},
-      // Don't be confused with `devMiddleware.publicPath`, it is `publicPath` for static directory
-      // Can be:
-      // publicPath: ['/static-public-path-one/', '/static-public-path-two/'],
-      // publicPath: '/static-public-path/',
-      // Can be:
-      // serveIndex: {} (options for the `serveIndex` option you can find https://github.com/expressjs/serve-index)
-      serveIndex: true,
-      // Can be:
-      // watch: {} (options for the `watch` option you can find https://github.com/paulmillr/chokidar)
-      watch: true,
-    },
-    compress: true,
-    allowedHosts: 'all',
+    host: '0.0.0.0',
+    // contentBase: path.join(__dirname, '../build'),
+    // compress: true,
     port: 4002,
-    hot: 'only',
+    hot: true,
     historyApiFallback: true, // router history 模式下需要
+  },
+}
+
+const proxyMap = {
+  test: {
     proxy: {
-      '/user': 'http://api.fangmingdong.com/',
+      '/api': { target: 'https://testapi.mountainseas.cn/', secure: false, changeOrigin: true },
+    },
+  },
+  development: {
+    proxy: {
+      '/api': { target: 'https://devapi.mountainseas.cn/', secure: false, changeOrigin: true },
+    },
+  },
+  production: {
+    proxy: {
+      '/api': { target: 'https://prodapi.mountainseas.cn/', secure: false, changeOrigin: true },
     },
   },
 }
+
+webpackConfigDev.devServer['proxy'] = proxyMap[process.env.BACKEND_ENV].proxy
 
 const baseConfig = webpackConfigBase('development')
 

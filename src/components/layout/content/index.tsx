@@ -1,7 +1,10 @@
 import { Layout } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import routeList from '@/router'
+import loadable from '@loadable/component'
+import { log } from 'console'
+import HomePage from '@/pages/home'
 
 type ContentLayoutProps = {
   location: any
@@ -10,9 +13,10 @@ type ContentLayoutProps = {
 function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
   const mergeMenu = (list: any, routeList: any) => {
     for (const menu of routeList) {
-      list.push(menu)
       if (menu.children) {
         mergeMenu(list, menu.children)
+      } else {
+        list.push(menu)
       }
     }
   }
@@ -20,18 +24,27 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
   // 这个地方必须同步创建路由，否则会自动转发到 /error/404 界面
   mergeMenu(tempMenuList, routeList)
 
+  console.log('route.componentPath', tempMenuList)
+
   return (
     <Layout.Content>
-      <Switch location={location}>
+      <Routes location={location}>
         {tempMenuList.map((route) => {
-          // TODO: 权限控制，动态路由
-          //   return handleFilter(route) && <Route component={route.component} key={route.path} path={route.path} />
-          return <Route exact component={route.component} key={route.path} path={route.path} />
+          return (
+            // <Route
+            //   element={React.createElement(
+            //     loadable(() => import(/* webpackChunkName: 'page'*/ `../../../pages${route.componentPath}`))
+            //   )}
+            //   key={route.path}
+            //   path={route.path}
+            // />
+            <Route element={React.createElement(route.component)} key={route.path} path={route.path} />
+          )
         })}
-        <Redirect to="/error/404" />
-      </Switch>
+        {/* <Redirect to="/error/404" /> */}
+      </Routes>
     </Layout.Content>
   )
 }
 
-export default withRouter(ContentLayout)
+export default ContentLayout

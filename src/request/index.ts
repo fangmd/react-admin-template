@@ -5,6 +5,8 @@
 
 import axios from 'axios'
 import createHeader from './custom-header'
+import { message } from 'antd'
+import { userLoginOut } from '@/utils/biz'
 const JSONbigString = require('json-bigint')({ storeAsString: true })
 
 // 创建axios实例
@@ -54,9 +56,14 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   // 请求成功
   (res) => {
-    if (res.status === 200) {
+    if (res.status === 200 && res.data.code === 200) {
       return Promise.resolve(res.data)
     } else {
+      if(res.data.code === 401){
+        // 未登录，清理用户登录数据
+        userLoginOut()
+      }
+      message.error(res.data.msg)
       return Promise.reject(res.data)
     }
   },

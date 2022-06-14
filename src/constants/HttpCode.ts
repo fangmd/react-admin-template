@@ -4,5 +4,5 @@
  */
 export class HttpCode {
   /**成功 */
-  static success = '200'
+  static success = 200
 }

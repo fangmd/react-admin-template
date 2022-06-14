@@ -1,5 +1,7 @@
+import { USER_INFO } from '@/constants/CookiesC'
 import { useStore } from '@/store/context'
 import { getJWT } from '@/utils/biz'
+import { getCookie } from '@/utils/cookies'
 import { Button, Col, Form, Input, Row } from 'antd'
 import { observer } from 'mobx-react-lite'
 // import logo from '@/assets/img/logo.png'
@@ -15,13 +17,11 @@ const LoginPage: React.FC = () => {
   useEffect(() => {
     //TODO: test
     form.setFieldsValue({
-      // username: 'qwrqerewty',
-      // password: '6623664xing',
-      username: '',
-      password: '',
+      username: 'admin',
+      password: '12345678',
     })
 
-    if (getJWT()) {
+    if (getCookie(USER_INFO)) {
       // 已经登录，跳转到首页
       window.location.href = '/'
     }

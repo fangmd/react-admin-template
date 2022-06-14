@@ -33,7 +33,7 @@ const proxyMap = {
   },
   development: {
     proxy: {
-      '/api': { target: 'https://devapi.mountainseas.cn/', secure: false, changeOrigin: true },
+      '/api': { target: 'http://localhost:3000/', secure: false, changeOrigin: true },
     },
   },
   production: {

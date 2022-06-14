@@ -1,4 +1,4 @@
-import { USER_DETAIL } from '@/constants/CookiesC'
+import { USER_DETAIL, USER_INFO } from '@/constants/CookiesC'
 import { getCookie, removeCookie, setCookie } from './cookies'
 
 const TOKEN_KEY = 'auth2'
@@ -9,6 +9,7 @@ const TOKEN_KEY = 'auth2'
 export function userLoginOut() {
   removeJWT()
   removeCookie(USER_DETAIL)
+  removeCookie(USER_INFO)
   if (window.location.pathname === '/login') return
   window.location.href = '/login'
 }

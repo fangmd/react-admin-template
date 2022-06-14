@@ -13,7 +13,7 @@ const UserManagePage: React.FC = () => {
   const [form] = Form.useForm()
 
   const [tableState, setTableState] = useSetState<TableState>({
-    pageIndex: 0,
+    pageIndex: 1,
     pageSize: 10,
     total: 0,
     data: [],
@@ -61,7 +61,7 @@ const UserManagePage: React.FC = () => {
   const onPaginationChange = (page: number, pageSize: number) => {
     setTableState({
       pageSize: pageSize,
-      pageIndex: page - 1,
+      pageIndex: page,
     })
   }
 
@@ -85,14 +85,14 @@ const UserManagePage: React.FC = () => {
 
   /**筛选 */
   const onFinish = () => {
-    setTableState({ pageIndex: 0 })
-    loadData(0)
+    setTableState({ pageIndex: 1 })
+    loadData(1)
   }
 
   /**重置 */
   const resetTable = () => {
     form.resetFields()
-    setTableState({ pageIndex: 0 })
+    setTableState({ pageIndex: 1 })
     loadData(1)
   }
 

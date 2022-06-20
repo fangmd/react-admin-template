@@ -5,7 +5,10 @@ const HomePage = loadable(() => import(/* webpackChunkName: 'HomePage'*/ '@/page
 const MinePage = loadable(() => import(/* webpackChunkName: 'MinePage'*/ '@/pages/mine/mine'))
 const Table = loadable(() => import(/* webpackChunkName: 'Table'*/ '@/pages/table'))
 
-const UserManage = loadable(() => import(/* webpackChunkName: 'Table'*/ '@/pages/system/UserManage'))
+const PermissionManage = loadable(() => import(/* webpackChunkName: 'system'*/ '@/pages/system/PermissionManage'))
+const RoleManage = loadable(() => import(/* webpackChunkName: 'system'*/ '@/pages/system/RoleManage'))
+const UserManage = loadable(() => import(/* webpackChunkName: 'system'*/ '@/pages/system/UserManage'))
+
 
 export default [
   {
@@ -30,8 +33,8 @@ export default [
     title: '系统管理',
     icon: UserOutlined,
     children: [
-      { path: '/system/menu', component: Table, title: '菜单管理', icon: BorderlessTableOutlined },
-      { path: '/system/role', component: Table, title: '角色管理', icon: BorderlessTableOutlined },
+      { path: '/system/menu', component: PermissionManage, title: '权限管理', icon: BorderlessTableOutlined },
+      { path: '/system/role', component: RoleManage, title: '角色管理', icon: BorderlessTableOutlined },
       { path: '/system/user', component: UserManage, title: '用户管理', icon: BorderlessTableOutlined },
     ],
   },

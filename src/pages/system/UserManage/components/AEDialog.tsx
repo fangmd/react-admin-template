@@ -3,6 +3,7 @@ import React, { FC, useEffect } from 'react'
 import { HttpCode } from '@/constants/HttpCode'
 import { DialogMode } from '@/utils/enum'
 import { UserService } from '@/service/UserService'
+import { RoleSelect } from '@/components/RoleSelect'
 
 interface Props {
   data: any
@@ -26,6 +27,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
     if (mode === 'edit') {
       form.setFieldsValue({
         name: data?.name,
+        roleId: data.roleId,
         password: PWD_PLACE_HOLDER,
       })
     }
@@ -90,6 +92,9 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
       >
         <Form.Item label="账号名称" name="name" rules={[{ required: true, message: '请输入' }]}>
           <Input placeholder="请输入账号名称" />
+        </Form.Item>
+        <Form.Item label="角色" name="roleId" rules={[{ required: true, message: '请输入' }]}>
+          <RoleSelect />
         </Form.Item>
         <Form.Item label="密码" name="password" rules={pwdRole}>
           <Input.Password placeholder="请输入密码" />

@@ -49,6 +49,10 @@ const RoleManagePage: React.FC = () => {
       dataIndex: 'name',
     },
     {
+      title: '权限',
+      dataIndex: 'permissionNames',
+    },
+    {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
@@ -140,6 +144,7 @@ const RoleManagePage: React.FC = () => {
         rowKey="id"
         columns={columns}
         dataSource={tableState.data}
+        scroll={{ x: 'max-content' }}
         pagination={{
           onChange: onPaginationChange,
           showSizeChanger: true,

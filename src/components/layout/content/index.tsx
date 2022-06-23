@@ -1,16 +1,17 @@
 import { Layout } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import routeList from '@/router'
 import loadable from '@loadable/component'
-import { log } from 'console'
-import HomePage from '@/pages/home'
+import { useStore } from '@/store/context'
+import { observer } from 'mobx-react-lite'
 
 type ContentLayoutProps = {
   location: any
 }
 
 function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
+  const store = useStore()
+
   const mergeMenu = (list: any, routeList: any) => {
     for (const menu of routeList) {
       if (menu.children) {
@@ -21,24 +22,22 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
     }
   }
   const tempMenuList: any[] = []
-  // 这个地方必须同步创建路由，否则会自动转发到 /error/404 界面
-  mergeMenu(tempMenuList, routeList)
 
-  console.log('route.componentPath', tempMenuList)
+  // 这个地方必须同步创建路由，否则会自动转发到 /error/404 界面
+  mergeMenu(tempMenuList, store.adminStore.menu)
 
   return (
     <Layout.Content>
       <Routes location={location}>
         {tempMenuList.map((route) => {
           return (
-            // <Route
-            //   element={React.createElement(
-            //     loadable(() => import(/* webpackChunkName: 'page'*/ `../../../pages${route.componentPath}`))
-            //   )}
-            //   key={route.path}
-            //   path={route.path}
-            // />
-            <Route element={React.createElement(route.component)} key={route.path} path={route.path} />
+            <Route
+              element={React.createElement(
+                loadable(() => import(/* webpackChunkName: 'page'*/ `../../../pages${route.componentPath}`))
+              )}
+              key={route.urlPath}
+              path={route.urlPath}
+            />
           )
         })}
         {/* <Redirect to="/error/404" /> */}
@@ -47,4 +46,4 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
   )
 }
 
-export default ContentLayout
+export default observer(ContentLayout)

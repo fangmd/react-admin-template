@@ -21,9 +21,6 @@ class AdminStore {
   }
 
   init() {
-    //init menu
-    this.setMenu(routeList)
-
     if (!isUserLogin()) {
       // 未登录，去登录页面
       if (window.location.pathname !== '/login') {
@@ -35,8 +32,9 @@ class AdminStore {
       //   // console.log('this.userDetails', this.userDetails)
       // }
 
+      // init menu
       UserService.permissions().then((res) => {
-        console.log(res)
+        this.setMenu(res.data)
       })
     }
   }

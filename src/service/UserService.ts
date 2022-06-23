@@ -1,4 +1,3 @@
-import { name } from './../../node_modules/@leichtgewicht/ip-codec/types/index.d'
 import axios from '@/request'
 
 export class UserService {
@@ -37,5 +36,12 @@ export class UserService {
    */
   static edit(data): Promise<any> {
     return axios.put('/api/admin-user', data)
+  }
+
+  /**
+   * 获取所有权限
+   */
+  static permissions(): Promise<any> {
+    return axios.get('/api/admin-user/permission')
   }
 }

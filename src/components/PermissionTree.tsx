@@ -45,7 +45,9 @@ export const PermissionTree: React.FC<Props> = ({ value, onChange }) => {
 
   useEffect(() => {
     // console.log('value', value)
-    value && setPermissionIdArr(JSON.parse(value))
+    if (value) {
+      setPermissionIdArr(JSON.parse(value))
+    }
   }, [value])
 
   const onCascaderChange = (checkedKeys) => {

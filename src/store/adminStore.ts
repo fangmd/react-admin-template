@@ -34,6 +34,10 @@ class AdminStore {
       //   this.userDetails = JSON.parse(getCookie(USER_DETAIL) ?? '')
       //   // console.log('this.userDetails', this.userDetails)
       // }
+
+      UserService.permissions().then((res) => {
+        console.log(res)
+      })
     }
   }
 

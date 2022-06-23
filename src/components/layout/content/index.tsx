@@ -14,10 +14,11 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
 
   const mergeMenu = (list: any, routeList: any) => {
     for (const menu of routeList) {
+      if (menu.roleType === 1) {
+        list.push(menu)
+      }
       if (menu.children) {
         mergeMenu(list, menu.children)
-      } else {
-        list.push(menu)
       }
     }
   }
@@ -25,6 +26,8 @@ function ContentLayout({ location }: ContentLayoutProps): JSX.Element {
 
   // 这个地方必须同步创建路由，否则会自动转发到 /error/404 界面
   mergeMenu(tempMenuList, store.adminStore.menu)
+
+  console.log('tempMenuList', tempMenuList)
 
   return (
     <Layout.Content>

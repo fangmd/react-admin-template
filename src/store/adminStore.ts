@@ -1,5 +1,4 @@
 import { USER_INFO } from '@/constants/CookiesC'
-import routeList from '@/router'
 import { UserService } from '@/service/UserService'
 import { isUserLogin, setJWT } from '@/utils/biz'
 import { setCookie } from '@/utils/cookies'
@@ -11,10 +10,12 @@ import { action, makeObservable, observable } from 'mobx'
  */
 class AdminStore {
   menu: any[] = []
+  otherPermissions: string[] = []
 
   constructor() {
     makeObservable(this, {
       menu: observable,
+      otherPermissions: observable,
       setMenu: action,
       init: action,
     })
@@ -34,9 +35,33 @@ class AdminStore {
 
       // init menu
       UserService.permissions().then((res) => {
-        this.setMenu(res.data)
+        const { otherPermissions, menus } = this.permissionFilter(res.data)
+        this.setMenu(menus)
+        this.otherPermissions = otherPermissions.map((i) => {
+          return i['urlPath']
+        })
       })
     }
+  }
+
+  permissionFilter(allPermissions: any[]) {
+    const ret = { otherPermissions: [], menus: [] }
+    const innerFunc = (allP, ret) => {
+      allP = allP.filter((i) => {
+        if (i.children) {
+          i.children = innerFunc(i.children, ret)
+        }
+        if (i.roleType === 2) {
+          ret.otherPermissions.push(i)
+        }
+        return i.roleType === 1
+      })
+      return allP
+    }
+
+    ret.menus = innerFunc(allPermissions, ret)
+
+    return ret
   }
 
   setMenu(_menu: any) {

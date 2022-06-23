@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import './index.less'
 
 function LayoutSider(): JSX.Element {
   const store = useStore()
@@ -46,7 +47,7 @@ function LayoutSider(): JSX.Element {
   }
 
   return (
-    <Layout.Sider>
+    <Layout.Sider className="Sider">
       <Menu mode="inline" theme="dark" selectedKeys={selectedKeys}>
         {getMenuNodes(store.adminStore.menu)}
       </Menu>

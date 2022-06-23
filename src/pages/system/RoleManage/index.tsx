@@ -56,7 +56,7 @@ const RoleManagePage: React.FC = () => {
       title: '操作',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button onClick={() => edit(record)}>编辑</Button>
+          <Button size="small" onClick={() => edit(record)}>编辑</Button>
         </Space>
       ),
     },

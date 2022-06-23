@@ -1,12 +1,12 @@
 import { DialogState, TableState } from '@/types/commonState'
-import { Button, Col, Form, Modal, Row, Space, Table } from 'antd'
+import { Button, Form, Modal, Row, Space, Table } from 'antd'
 import React, { useEffect } from 'react'
 import { useSetState } from 'ahooks'
 import { PermissionService } from '@/service/PermissionService'
-import { InputItem } from '@/components/formItem/InputItem'
 import AEDialog from './components/AEDialog'
 import { TrueFalseColumn } from '@/components/tableColumn/TrueFalseColumn'
 import { HttpCode } from '@/constants/HttpCode'
+import AuthGuard from '@/components/AuthGuard'
 
 /**
  * 管理后台权限/菜单管理
@@ -88,12 +88,22 @@ const PermissionManagePage: React.FC = () => {
       title: '操作',
       fixed: 'right',
       render: (text: any, record: any) => (
-        <Space size="middle">
-          <Button onClick={() => edit(record)}>编辑</Button>
-          <Button onClick={() => addChildren(record)}>添加</Button>
-          <Button type="default" danger onClick={() => _delItem(record)}>
-            删除
-          </Button>
+        <Space size="small">
+          <AuthGuard pKey="/system/PermissionManage/EditBtn">
+            <Button size="small" onClick={() => edit(record)}>
+              编辑
+            </Button>
+          </AuthGuard>
+          <AuthGuard pKey="/system/PermissionManage/AddBtn">
+            <Button size="small" onClick={() => addChildren(record)}>
+              添加
+            </Button>
+          </AuthGuard>
+          <AuthGuard pKey="/system/PermissionManage/DeleteBtn">
+            <Button size="small" type="default" danger onClick={() => _delItem(record)}>
+              删除
+            </Button>
+          </AuthGuard>
         </Space>
       ),
     },

@@ -101,10 +101,10 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         <Form.Item label="权限名称" name="name" rules={[{ required: true, message: '请输入' }]}>
           <Input placeholder="请输入" />
         </Form.Item>
-        <Form.Item label="图标" name="icon" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="图标" name="icon" rules={[{ required: false }]}>
           <Input placeholder="请输入" />
         </Form.Item>
-        <Form.Item label="组件地址" name="componentPath" rules={[{ required: true, message: '请输入' }]}>
+        <Form.Item label="组件地址" name="componentPath" rules={[{ required: false, message: '请输入' }]}>
           <Input placeholder="请输入" />
         </Form.Item>
         <Form.Item label="页面 url" name="urlPath" rules={[{ required: true, message: '请输入' }]}>
@@ -116,7 +116,7 @@ const AEDialog: FC<Props> = ({ data, mode, show = false, onSuccess, onClose }) =
         <Form.Item
           label="角色类型"
           name="roleType"
-          valuePropName="checked"
+          initialValue={1}
           rules={[{ required: true, message: '请输入' }]}
         >
           <Radio.Group options={options}></Radio.Group>

@@ -23,28 +23,32 @@ module.exports = function (webpackEnv) {
         '@': path.join(__dirname, '../src'),
       },
     },
+    output: {
+      assetModuleFilename: 'static/media/[hash][ext][query]',
+    },
+    cache: {
+      type: 'filesystem', // 使用文件缓存, 加快启动速度/打包速度
+    },
     module: {
       rules: [
         {
-          // "oneOf" will traverse all following loaders until one will
-          // match the requirements. When no loader matches it will fall
-          // back to the "file" loader at the end of the loader list.
           oneOf: [
             {
               test: [/\.avif$/],
-              loader: require.resolve('url-loader'),
-              options: {
-                limit: imageInlineSizeLimit,
-                mimetype: 'image/avif',
-                name: 'static/media/[name].[hash:8].[ext]',
+              type: 'asset',
+              parser: {
+                dataUrlCondition: {
+                  maxSize: 20 * 1024, // 20kb
+                },
               },
             },
             {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-              loader: require.resolve('url-loader'),
-              options: {
-                limit: imageInlineSizeLimit,
-                name: 'static/media/[name].[hash:8].[ext]',
+              type: 'asset',
+              parser: {
+                dataUrlCondition: {
+                  maxSize: 20 * 1024, // 20kb
+                },
               },
             },
             {
@@ -128,15 +132,8 @@ module.exports = function (webpackEnv) {
               ],
             },
             {
-              loader: require.resolve('file-loader'),
-              // Exclude `js` files to keep "css" loader working as it injects
-              // its runtime that would otherwise be processed through "file" loader.
-              // Also exclude `html` and `json` extensions so they get processed
-              // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
-              options: {
-                name: 'static/media/[name].[hash:8].[ext]',
-              },
+              type: 'asset/resource',
             },
           ],
         },
